@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 
+from datetime import datetime
+
 
 class Profile(models.Model):
     name = models.CharField('Name', max_length=20)
@@ -14,3 +16,14 @@ class Profile(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class HttpRequest(models.Model):
+    time = models.DateTimeField(default=datetime.now)
+    url = models.CharField(max_length=250)
+
+    class Meta:
+        ordering = ('pk',)
+
+    def __unicode__(self):
+        return self.url
