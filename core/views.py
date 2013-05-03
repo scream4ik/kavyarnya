@@ -13,3 +13,8 @@ class IndexView(DetailView):
             return Profile.objects.all()[0]
         except IndexError:
             return
+
+    def get_context_data(self, **kwargs):
+        ctx = super(IndexView, self).get_context_data(**kwargs)
+        ctx['first_urls'] = HttpRequest.objects.all()[:10]
+        return ctx
