@@ -1,8 +1,38 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
+{{ form.media }}
+<script>
+    $(function() {
+        $( "#id_birthday" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>
+<script>
+$(document).ready(function() {
+    $('#myForm').on('submit', function(e) {
+        e.preventDefault(); // <-- important
+        $(this).ajaxSubmit({
+            url: '{% url "profile_edit" %}',
+            beforeSubmit: function(formData, form, options) {
+                $('#output').text('Loading...').slideDown();
+                $('#myForm').find(':submit, :text, :checkbox, textarea').prop('disabled', true);
+            },
+            success: function() {
+                $('#output').text('Save successful').slideDown();
+                $('#myForm').find(':submit, :text, :checkbox, textarea').prop('disabled', false);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+
 {% block content %}
-    <form action="." method="post" enctype="multipart/form-data">{% csrf_token %}
+    <form action="." method="post" enctype="multipart/form-data" id="myForm">{% csrf_token %}
         {{ form.as_p }}
         <p><input type="submit" value="Save"> <a href="{% url 'index' %}">Cancel</a></p>
     </form>
+    <div id="output"></div>
 {% endblock %}
