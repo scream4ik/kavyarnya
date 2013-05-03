@@ -1,0 +1,16 @@
+[
+  {
+    "pk": 1, 
+    "model": "core.profile", 
+    "fields": {
+      "name": "Slava", 
+      "surname": "Kyrachevsky", 
+      "birthday": "1990-06-02", 
+      "bio": "My bio", 
+      "email": "slava.deb@gmail.com", 
+      "jabber": "slava.deb@gmail.com", 
+      "skype": "scream4ik_", 
+      "other_contacts": ""
+    }
+  }
+]

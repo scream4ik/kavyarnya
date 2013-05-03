@@ -127,6 +127,8 @@ INSTALLED_APPS = (
 
     'kavyarnya',
     'core',
+
+    'south',
 )
 
 if DEBUG:

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>42 Coffee Cups Test Assignment</h1>
+<table width="50%">
+    <tr>
+        <td>
+            Name: {{ obj.name }}<br>
+            Last name: {{ obj.surname }}<br>
+            Date of birth: {{ obj.birthday }}<br>
+            Bio: {{ obj.bio }}
+        </td>
+        <td>
+            Contacts<br>
+            Email: {{ obj.email }}<br>
+            Jabber: {{ obj.jabber }}<br>
+            Skype: {{ obj.skype }}<br>
+            Other contacts: {{ obj.other_contacts }}
+        </td>
+    </tr>
+</table>
+{% endblock %}
