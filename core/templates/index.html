@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 
 {% block content %}
-<h1>42 Coffee Cups Test Assignment</h1>
+{% if user.is_authenticated %}<a href="{% url 'profile_edit' %}">Edit</a>{% else %}<a href="#">Login</a>{% endif %}
 <table width="50%">
     <tr>
         <td>
             Name: {{ obj.name }}<br>
             Last name: {{ obj.surname }}<br>
             Date of birth: {{ obj.birthday }}<br>
-            Bio: {{ obj.bio }}
+            Photo:<br>
+            {% thumbnail obj.photo "290x390" as im %}
+                <img src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}">
+            {% endthumbnail %}
         </td>
-        <td>
+        <td valign="top">
             Contacts<br>
             Email: {{ obj.email }}<br>
             Jabber: {{ obj.jabber }}<br>
             Skype: {{ obj.skype }}<br>
-            Other contacts: {{ obj.other_contacts }}
+            Other contacts: {{ obj.other_contacts }}<br>
+            Bio: {{ obj.bio }}
         </td>
     </tr>
 </table>
-<hr>
-{% for x in first_urls %}
-    {{ x.url }}<br>
-{% endfor %}
 {% endblock %}

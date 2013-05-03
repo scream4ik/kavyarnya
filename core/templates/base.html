@@ -1,5 +1,10 @@
 <html>
 <body>
+<h1>42 Coffee Cups Test Assignment</h1>
 {% block content %}{% endblock %}
+<hr>
+{% for x in FIRST_REQ %}
+    {{ x.url }}<br>
+{% endfor %}
 </body>
 </html>

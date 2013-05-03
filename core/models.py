@@ -1,6 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 
+from kavyarnya.utils import image_path
+from sorl.thumbnail import ImageField
+
 from datetime import datetime
 
 
@@ -13,6 +16,7 @@ class Profile(models.Model):
     jabber = models.EmailField('Jabber', blank=True)
     skype = models.CharField('Skype', max_length=20, blank=True)
     other_contacts = models.TextField('Other contacts', blank=True)
+    photo = ImageField('Photo', upload_to=image_path, max_length=250, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
