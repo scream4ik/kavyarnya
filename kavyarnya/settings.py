@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'core',
 
     'south',
+    'sorl.thumbnail',
 )
 
 if DEBUG:
