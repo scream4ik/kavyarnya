@@ -1,4 +1,4 @@
-.PHONY: requirements requirements-upgrade freeze syncdb run run-public makemessages compilemessages south collectstatic cloc clean
+.PHONY: requirements requirements-upgrade freeze syncdb run run-public makemessages compilemessages south collectstatic cloc clean test
 
 project_name=kavyarnya
 
@@ -56,3 +56,7 @@ cloc:
 clean:
 	-@echo "### Cleaning *.pyc files "
 	-@find . -name '*.pyc' -exec rm -f {} \;
+
+test:
+	-@echo "### Run test"
+	-@python manage.py test
