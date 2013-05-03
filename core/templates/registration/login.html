@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form class="form-horizontal" method="post" action=".">{% csrf_token %}
+<fieldset>
+    <legend>Authorization</legend>
+    {% if user.is_authenticated %}
+        What's up, {{ user.username }}? You're already logged.
+        However, you can always <a href="{% url 'auth_logout' %}">logout</a>.
+    {% else %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-error">{{ form.non_field_errors }}</div>
+    {% endif %}
+    {% for field in form %}
+        <div class="control-group">
+            <label class="control-label" for="id_username">{{ field.label_tag }}</label>
+            <div class="controls">{{ field }}</div>
+            {% if field.errors %}<div class="alert alert-error">{{ field.errors|striptags }}</div>{% endif %}
+        </div>
+    {% endfor %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-danger">Login</button>
+    {% endif %}
+</fieldset>
+</form>
+{% endblock %}
