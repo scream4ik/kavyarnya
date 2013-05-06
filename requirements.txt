@@ -2,7 +2,7 @@ Django==1.5.1
 PIL==1.1.7
 South==0.7.6
 argparse==1.2.1
-django-debug-toolbar==0.9.4
+-e git+https://github.com/django-debug-toolbar/django-debug-toolbar@5ae6fcc61c7596b4980e85186f3737fad01a0ad4#egg=django_debug_toolbar-dev
 sorl-thumbnail==11.12
 trans==1.5.1
 wsgiref==0.1.2
