@@ -17,6 +17,7 @@ freeze:
 syncdb:
 	-@echo "### Creating database tables and loading fixtures"
 	@PYTHONPATH=$(PYTHONPATH):. DJANGO_SETTINGS_MODULE=$(project_name).settings python manage.py syncdb --noinput
+	@PYTHONPATH=$(PYTHONPATH):. DJANGO_SETTINGS_MODULE=$(project_name).settings python manage.py migrate core
 	@PYTHONPATH=$(PYTHONPATH):. DJANGO_SETTINGS_MODULE=$(project_name).settings python manage.py loaddata fixtures/*
 
 run:
