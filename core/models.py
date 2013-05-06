@@ -36,6 +36,7 @@ class Profile(models.Model):
 class HttpRequest(models.Model):
     time = models.DateTimeField(default=datetime.now)
     url = models.CharField(max_length=250)
+    priority = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('pk',)
