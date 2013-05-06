@@ -59,4 +59,4 @@ clean:
 
 test:
 	-@echo "### Run test"
-	-@python manage.py test
+	-@python manage.py test core
