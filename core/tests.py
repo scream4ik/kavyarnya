@@ -57,3 +57,9 @@ class ProfileEditViewTest(BaseTest):
                             'email': 'slava.deb@gmail.com'
                         })
         self.assertEqual(response.status_code, 302)
+
+
+class CheckTextTest(BaseTest):
+    def test_text(self):
+        response = self.client.get(reverse('index'))
+        self.assertContains(response, 'My bio', status_code=200)
