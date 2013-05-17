@@ -9,7 +9,7 @@ from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
-from models import Profile
+from models import Profile, HttpRequest
 
 
 class SimpleTest(TestCase):
@@ -63,3 +63,12 @@ class CheckTextTest(BaseTest):
     def test_text(self):
         response = self.client.get(reverse('index'))
         self.assertContains(response, 'My bio', status_code=200)
+
+
+class MiddlewareTest(BaseTest):
+    def test_middleware(self):
+        self.client.get(reverse('index'))
+
+        req = HttpRequest.objects.get(url='/')
+        self.assertNotEquals(req, None)
+        self.assertEquals(req.priority, 0)
