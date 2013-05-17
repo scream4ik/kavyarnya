@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models import Profile, HttpRequest
+from models import Profile, HttpRequest, Log
 from sorl.thumbnail.admin import AdminImageMixin
 
 
@@ -15,3 +15,6 @@ class HttpRequestAdmin(admin.ModelAdmin):
     list_filter = ('time', 'priority')
 
 admin.site.register(HttpRequest, HttpRequestAdmin)
+
+
+admin.site.register(Log)
