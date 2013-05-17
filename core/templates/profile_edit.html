@@ -3,6 +3,7 @@
 {% block head %}
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 {{ form.media }}
 <script>
     $(function() {
@@ -13,7 +14,7 @@
 $(document).ready(function() {
     $('#myForm').on('submit', function(e) {
         e.preventDefault(); // <-- important
-        $(this).ajaxSubmit({
+        var options = {
             url: '{% url "profile_edit" %}',
             beforeSubmit: function(formData, form, options) {
                 $('#output').text('Loading...').slideDown();
@@ -22,6 +23,50 @@ $(document).ready(function() {
             success: function() {
                 $('#output').text('Save successful').slideDown();
                 $('#myForm').find(':submit, :text, :checkbox, textarea').prop('disabled', false);
+            }
+        }
+
+        $("#myForm").validate({
+            submitHandler: function(form) {
+                $(form).ajaxSubmit(options);
+            },
+            focusInvalid: false,
+            focusCleanup: true,
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 12
+                },
+                surname: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 12
+                },
+                birthday: {
+                    required: true,
+                    dateISO: true
+                },
+                bio: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                jabber: {
+                    required: false,
+                    email: true
+                },
+                skype: {
+                    required: false
+                },
+                other_contacts: {
+                    required: false
+                },
+                photo: {
+                    required: false,
+                }
             }
         });
     });
