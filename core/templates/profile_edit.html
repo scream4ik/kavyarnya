@@ -24,6 +24,10 @@ $(document).ready(function() {
         }
     }
 
+    $("#myForm").click(function() {
+        $('#output').text('');
+    });
+
     $("#myForm").validate({
         submitHandler: function(form) {
             $(form).ajaxSubmit(options);
