@@ -26,6 +26,9 @@ class BaseTest(TestCase):
         p = User.objects.create_user('admin',
                                         'admin@example.com',
                                         'admin')
+        p.is_staff = True
+        p.is_active = True
+        p.is_superuser = True
         p.save()
         p = Profile(name='Slava',
                     surname='Kyrachevsky',
@@ -80,3 +83,19 @@ class MiddlewareTest(BaseTest):
         req = HttpRequest.objects.get(url='/')
         self.assertNotEquals(req, None)
         self.assertEquals(req.priority, 0)
+
+
+class AdminEditLinkTest(BaseTest):
+    def test_admin_edit_link(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response,
+                                '<a href="/admin/core/profile/1/">admin</a>')
+
+        login = self.client.login(username='admin', password='admin')
+        self.assertTrue(login)
+
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response,
+                                '<a href="/admin/core/profile/1/">admin</a>')
