@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for x in obj %}
+        {{ forloop.counter }}. {{ x.url }}<br>
+    {% endfor %}
+{% endblock %}

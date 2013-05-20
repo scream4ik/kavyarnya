@@ -144,6 +144,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
 )
 
+LOGIN_REDIRECT_URL = '/'
+
 if DEBUG:
     MIDDLEWARE_CLASSES += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
