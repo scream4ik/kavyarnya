@@ -12,66 +12,66 @@
 </script>
 <script>
 $(document).ready(function() {
-    $('#myForm').on('submit', function(e) {
-        e.preventDefault(); // <-- important
-        var options = {
-            url: '{% url "profile_edit" %}',
-            beforeSubmit: function(formData, form, options) {
-                $('#output').text('Loading...').slideDown();
-                $('#myForm').find(':submit, :text, :checkbox, textarea').prop('disabled', true);
+    var options = {
+        url: '{% url "profile_edit" %}',
+        beforeSubmit: function(formData, form, options) {
+            $('#output').text('Loading...').slideDown();
+            $('#myForm').find(':submit, :text, :checkbox, textarea').prop('disabled', true);
+        },
+        success: function() {
+            $('#output').text('Save successful').slideDown();
+            $('#myForm').find(':submit, :text, :checkbox, textarea').prop('disabled', false);
+        }
+    }
+
+    $("#myForm").validate({
+        submitHandler: function(form) {
+            $(form).ajaxSubmit(options);
+        },
+        focusInvalid: false,
+        focusCleanup: true,
+        rules: {
+            name: {
+                required: true,
+                minlength: 3,
+                maxlength: 12
             },
-            success: function() {
-                $('#output').text('Save successful').slideDown();
-                $('#myForm').find(':submit, :text, :checkbox, textarea').prop('disabled', false);
+            surname: {
+                required: true,
+                minlength: 3,
+                maxlength: 12
+            },
+            birthday: {
+                required: true,
+                dateISO: true
+            },
+            bio: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            jabber: {
+                required: false,
+                email: true
+            },
+            skype: {
+                required: false
+            },
+            other_contacts: {
+                required: false
+            },
+            photo: {
+                required: false,
             }
         }
-
-        $("#myForm").validate({
-            submitHandler: function(form) {
-                $(form).ajaxSubmit(options);
-            },
-            focusInvalid: false,
-            focusCleanup: true,
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 12
-                },
-                surname: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 12
-                },
-                birthday: {
-                    required: true,
-                    dateISO: true
-                },
-                bio: {
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                jabber: {
-                    required: false,
-                    email: true
-                },
-                skype: {
-                    required: false
-                },
-                other_contacts: {
-                    required: false
-                },
-                photo: {
-                    required: false,
-                }
-            }
-        });
     });
 });
 </script>
+<style>
+.error {color:red;}
+</style>
 {% endblock %}
 
 {% block content %}
