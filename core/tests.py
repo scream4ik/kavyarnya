@@ -8,8 +8,12 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.core.management import call_command
 
 from models import Profile, HttpRequest
+
+import sys
+import StringIO
 
 
 class SimpleTest(TestCase):
@@ -99,3 +103,12 @@ class AdminEditLinkTest(BaseTest):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response,
                                 '<a href="/admin/core/profile/1/">admin</a>')
+
+
+class CommandsTestCase(BaseTest):
+    def test_show_models(self):
+        old_stderr = sys.stderr
+        sys.stderr = StringIO.StringIO()
+        call_command('show_models')
+        self.assertTrue('core.models.HttpRequest' in sys.stderr.getvalue())
+        sys.stderr = old_stderr
