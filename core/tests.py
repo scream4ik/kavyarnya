@@ -53,10 +53,18 @@ class ProfileEditViewTest(BaseTest):
                             'name': 'Slava',
                             'surname': 'Kyrachevsky',
                             'birthday': '1990-06-02',
-                            'bio': 'My bio',
+                            'bio': 'My new bio',
                             'email': 'slava.deb@gmail.com'
                         })
         self.assertEqual(response.status_code, 302)
+
+        data = Profile.objects.all()[0]
+
+        self.assertEquals(data.name, 'Slava')
+        self.assertEquals(data.surname, 'Kyrachevsky')
+        self.assertEquals(data.birthday.strftime('%Y-%m-%d'), '1990-06-02')
+        self.assertEquals(data.bio, 'My new bio')
+        self.assertEquals(data.email, 'slava.deb@gmail.com')
 
 
 class CheckTextTest(BaseTest):
