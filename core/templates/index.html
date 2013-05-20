@@ -2,7 +2,7 @@
 {% load thumbnail core_tags %}
 
 {% block content %}
-{% if user.is_authenticated %}<a href="{% url 'profile_edit' %}">Edit</a>{% else %}<a href="#">Login</a>{% endif %} 
+{% if user.is_authenticated %}<a href="{% url 'profile_edit' %}">Edit</a>{% else %}<a href="{% url 'django.contrib.auth.views.login' %}">Login</a>{% endif %} 
 {% if user.is_superuser %}{% edit_link obj %}{% endif %}
 <table width="50%">
     <tr>

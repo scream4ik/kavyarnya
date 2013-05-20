@@ -32,3 +32,11 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return Profile.objects.all()[0]
+
+
+class HttpRequestView(DetailView):
+    template_name = 'http_request.html'
+    context_object_name = 'obj'
+
+    def get_object(self):
+        return HttpRequest.objects.all().order_by('pk')[:10]
