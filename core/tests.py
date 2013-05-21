@@ -146,3 +146,23 @@ class LogTestCase(BaseTest):
         self.assertEquals(log.object_id, pk)
         self.assertEquals(log.content_type,
                             ContentType.objects.get(model='profile'))
+
+
+class HttpRequestViewTest(BaseTest):
+    def test_http_request(self):
+        self.client.get(reverse('index'))
+
+        req = HttpRequest.objects.get(url='/')
+        self.assertNotEquals(req, None)
+        self.assertEquals(req.priority, 0)
+
+        response = self.client.post(
+                        reverse('http_request'),
+                        {
+                            'pr': 'increase',
+                            'obj_pk': req.pk,
+                        })
+        self.assertEqual(response.status_code, 302)
+
+        req = HttpRequest.objects.get(pk=req.pk)
+        self.assertEquals(req.priority, 1)
