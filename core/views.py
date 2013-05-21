@@ -3,6 +3,8 @@ from django.views.generic import DetailView, UpdateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 
 from models import *
 from forms import ProfileForm
@@ -40,3 +42,24 @@ class HttpRequestView(DetailView):
 
     def get_object(self):
         return HttpRequest.objects.all().order_by('pk')[:10]
+
+    def post(self, request, *args, **kwargs):
+        pr = self.request.POST.get('pr', '')
+        obj_pk = self.request.POST.get('obj_pk', '')
+
+        try:
+            int(pr)
+        except TypeError:
+            return HttpResponseRedirect(reverse_lazy('http_request'))
+
+        if int(pr) == 1 or int(pr) == 0:
+            try:
+                int(obj_pk)
+            except TypeError:
+                return HttpResponseRedirect(reverse_lazy('http_request'))
+
+            p = get_object_or_404(HttpRequest, pk=obj_pk)
+            p.priority = pr
+            p.save()
+
+        return HttpResponseRedirect(reverse_lazy('http_request'))
