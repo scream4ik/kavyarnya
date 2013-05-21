@@ -41,25 +41,23 @@ class HttpRequestView(DetailView):
     context_object_name = 'obj'
 
     def get_object(self):
-        return HttpRequest.objects.all().order_by('pk')[:10]
+        return HttpRequest.objects.all().order_by('priority')[:10]
 
     def post(self, request, *args, **kwargs):
         pr = self.request.POST.get('pr', '')
         obj_pk = self.request.POST.get('obj_pk', '')
 
-        try:
-            int(pr)
-        except TypeError:
-            return HttpResponseRedirect(reverse_lazy('http_request'))
-
-        if int(pr) == 1 or int(pr) == 0:
+        if pr.strip():
             try:
                 int(obj_pk)
             except TypeError:
                 return HttpResponseRedirect(reverse_lazy('http_request'))
 
             p = get_object_or_404(HttpRequest, pk=obj_pk)
-            p.priority = pr
+            if pr.strip() == 'increase':
+                p.priority = p.priority + 1
+            elif pr.strip() == 'decrease':
+                p.priority = p.priority - 1
             p.save()
 
         return HttpResponseRedirect(reverse_lazy('http_request'))
