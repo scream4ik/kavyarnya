@@ -9,8 +9,9 @@ from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.core.management import call_command
+from django.contrib.contenttypes.models import ContentType
 
-from models import Profile, HttpRequest
+from models import Profile, HttpRequest, Log
 
 import sys
 import StringIO
@@ -112,3 +113,36 @@ class CommandsTestCase(BaseTest):
         call_command('show_models')
         self.assertTrue('core.models.HttpRequest' in sys.stderr.getvalue())
         sys.stderr = old_stderr
+
+
+class LogTestCase(BaseTest):
+    def test_obj_create(self):
+        profile = Profile.objects.all()[0]
+        log = Log.objects.all().order_by('-pk')[0]
+
+        self.assertEquals(log.action, 'add')
+        self.assertEquals(log.object_id, profile.pk)
+        self.assertEquals(log.content_type,
+                            ContentType.objects.get(model='profile'))
+
+    def test_obj_update(self):
+        profile = Profile.objects.all()[0]
+        profile.name = 'qwerty'
+        profile.save()
+        log = Log.objects.all().order_by('-pk')[0]
+
+        self.assertEquals(log.action, 'edit')
+        self.assertEquals(log.object_id, profile.pk)
+        self.assertEquals(log.content_type,
+                            ContentType.objects.get(model='profile'))
+
+    def test_obj_delete(self):
+        profile = Profile.objects.all()[0]
+        pk = profile.pk
+        profile.delete()
+        log = Log.objects.all().order_by('-pk')[0]
+
+        self.assertEquals(log.action, 'delete')
+        self.assertEquals(log.object_id, pk)
+        self.assertEquals(log.content_type,
+                            ContentType.objects.get(model='profile'))
