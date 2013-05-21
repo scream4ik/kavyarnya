@@ -2,6 +2,13 @@
 
 {% block content %}
     {% for x in obj %}
-        {{ forloop.counter }}. {{ x.url }}<br>
+        <form action="." method="post">{% csrf_token %}
+            {{ forloop.counter }}. {{ x.url }} || Priority
+            <select name="pr" onchange="this.form.submit()">
+                <option value="0" {% if x.priority == 0 %}selected{% endif %}>0</option>
+                <option value="1" {% if x.priority == 1 %}selected{% endif %}>1</option>
+            </select>
+            <input type="hidden" value="{{ x.pk }}" name="obj_pk">
+        </form>
     {% endfor %}
 {% endblock %}
