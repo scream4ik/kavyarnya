@@ -55,9 +55,9 @@ class HttpRequestView(DetailView):
 
             p = get_object_or_404(HttpRequest, pk=obj_pk)
             if pr.strip() == 'increase':
-                p.priority = p.priority + 1
-            elif pr.strip() == 'decrease':
                 p.priority = p.priority - 1
+            elif pr.strip() == 'decrease':
+                p.priority = p.priority + 1
             p.save()
 
         return HttpResponseRedirect(reverse_lazy('http_request'))
