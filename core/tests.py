@@ -165,4 +165,4 @@ class HttpRequestViewTest(BaseTest):
         self.assertEqual(response.status_code, 302)
 
         req = HttpRequest.objects.get(pk=req.pk)
-        self.assertEquals(req.priority, 1)
+        self.assertEquals(req.priority, -1)
