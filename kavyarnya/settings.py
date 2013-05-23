@@ -139,6 +139,7 @@ INSTALLED_APPS = (
 
     'kavyarnya',
     'core',
+    'stats',
 
     'south',
     'sorl.thumbnail',

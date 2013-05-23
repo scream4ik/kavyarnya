@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load stats_tags %}
+
+{% block content %}
+<h2>Stats</h2>
+{% for x in obj %}
+    <b>{{ x.name|title }}:</b><br>
+    {% for k in x|get_visitors %}
+        &nbsp;&nbsp;&nbsp;&nbsp;{{ k.type }} - {{ k.count }}<br>
+    {% endfor %}
+{% endfor %}
+{% endblock %}
