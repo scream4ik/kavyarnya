@@ -3,13 +3,13 @@
     "pk": 1, 
     "model": "core.profile", 
     "fields": {
-      "name": "Slava", 
-      "surname": "Kyrachevsky", 
+      "name": "John", 
+      "surname": "Smith", 
       "birthday": "1990-06-02", 
       "bio": "My bio", 
-      "email": "slava.deb@gmail.com", 
-      "jabber": "slava.deb@gmail.com", 
-      "skype": "scream4ik_", 
+      "email": "qq@qq.qq", 
+      "jabber": "qq@qq.qq", 
+      "skype": "skype_name", 
       "other_contacts": ""
     }
   }
